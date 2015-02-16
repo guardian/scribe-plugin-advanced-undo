@@ -1,0 +1,22 @@
+{
+  "name": "scribe-plugin-accelerated-undo",
+  "description": "Accelerated Undo Manager for Scribe",
+  "version": "1.0.0",
+  "homepage": "",
+  "license": "Apache2",
+  "copyright": "",
+  "main": "dist/scribe-plugin-accelerated-undo.js",
+  "dependencies": {
+    "scribe": "~1.2.7",
+    "scribe-plugin-toolbar": "~0.1.4"
+  },
+  "devDependencies": {},
+  "ignore": [
+    "test",
+    "example",
+    "lib",
+    "Gruntfile.js",
+    "package.json",
+    "grunt"
+  ]
+}

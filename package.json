@@ -1,0 +1,47 @@
+{
+  "name": "scribe-plugin-accelerated-undo",
+  "description": "Accelerated Undo Manager for Scribe",
+  "version": "1.0.0",
+  "homepage": "",
+  "author": {
+    "name": "Jon Parsons",
+    "email": "jon.parsons@guardian.co.uk"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "licenses": [
+    {
+      "type": "Apache2"
+    }
+  ],
+  "main": "src/scribe-plugin-accelerated-undo",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "scripts": {
+    "test-firefox": "TEST_SERVER_PORT=9090 BROWSER_NAME='firefox' ./run-tests.sh",
+    "test-chrome": "TEST_SERVER_PORT=9090 BROWSER_NAME='chrome' ./run-tests.sh",
+    "test": "npm run test-chrome",
+    "postinstall": "bower install",
+    "watch": "nodemon --watch src --watch test --exec 'npm run test'",
+    "build-js": "browserify ./src/scribe-plugin-accelerated-undo.js --debug -t 6to5ify | exorcist build/main.build.js.map > build/main.build.js",
+    "build": ""
+  },
+  "devDependencies": {
+    "6to5ify": "^4.1.1",
+    "bower": "^1.3.12",
+    "browserify": "^8.1.3",
+    "chai": "1.9.1",
+    "exorcist": "^0.1.6",
+    "glob": "^4.3.5",
+    "http-server": "^0.7.1",
+    "lodash": "^2.4.1",
+    "mocha": "^2.0.1",
+    "nodemon": "^1.3.7",
+    "scribe-test-harness": "^0.0.6",
+    "selenium-webdriver": "^2.44.0",
+    "webdriver-manager": "^1.0.1"
+  }
+}
