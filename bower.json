@@ -6,11 +6,12 @@
   "license": "Apache2",
   "copyright": "",
   "main": "build/main.build.js",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "scribe": "~1.2.7",
-    "scribe-plugin-toolbar": "~0.1.4"
+    "scribe-plugin-toolbar": "~0.1.4",
+    "requirejs": "~2.1.16"
   },
-  "devDependencies": {},
   "ignore": [
     "test",
     "example",

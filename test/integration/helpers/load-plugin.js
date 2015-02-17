@@ -7,7 +7,7 @@ before(function(){
 
 module.exports = function loadPlugin() {
   return driver.executeAsyncScript(function (done) {
-    require(['../../build/main.build.js'], function (scribePluginAdvancedUndo) {
+    require(['../../build/main.build'], function (scribePluginAdvancedUndo) {
       window.scribe.use(scribePluginAdvanceUndo({
 
       }));

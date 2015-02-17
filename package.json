@@ -30,8 +30,8 @@
     "watch": "http-server --silent -p 8989 & nodemon --watch src --watch test --exec 'npm run test' & npm run reload & opener http://localhost:8989/example",
     "clean": "if [ -d ./build ]; then rm -rf ./build; fi",
     "prebuildjs": "if [ ! -d ./build ]; then mkdir ./build; fi",
-    "buildjs": "browserify ./src/scribe-plugin-advanced-undo.js --debug -t babelify | exorcist build/main.js.map > build/main.js",
-    "postbuildjs": "uglifyjs ./build/main.js --source-map ./build/main.build.js.map --in-source-map ./build/main.js.map -o ./build/main.build.js",
+    "buildjs": "browserify ./src/scribe-plugin-advanced-undo.js --standalone scribe-plugin-advanced-undo --debug -t babelify | exorcist build/main.js.map > build/main.js",
+    "postbuildjs": "cd build && uglifyjs main.js --source-map main.build.js.map --in-source-map main.js.map -o main.build.js",
     "build": "npm run clean && npm run buildjs"
   },
   "devDependencies": {
