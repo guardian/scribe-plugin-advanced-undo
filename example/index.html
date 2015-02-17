@@ -31,9 +31,9 @@
   });
 
   require(['scribe','build/main.build'], function(Scribe, scribeAdvancedUndo){
-    console.log(Scribe);
     window.Scribe = Scribe;
     window.scribe = new Scribe(document.querySelector('.scribe'));
+    scribe.use(scribeAdvancedUndo());
   });
 
 </script>
