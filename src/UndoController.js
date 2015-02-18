@@ -1,6 +1,7 @@
 var diff = require('virtual-dom/diff');
 var patch = require('virtual-dom/patch');
 var virtualize = require('vdom-virtualize');
+var uuid = require('uuid');
 
 module.exports = class UndoController {
 
@@ -22,33 +23,50 @@ module.exports = class UndoController {
 
   onKeyPressed(e){
     if(e.metaKey && e.keyCode === 90){
-      console.log('undo action');
       e.preventDefault();
+      //write the previous content into scribe's element
       var diff = this.diffs.pop();
       patch(this.scribe.el, diff);
-      //increment
+
+      //place the caret
+      var selection = window.getSelection();
+      var markers = this.scribe.el.querySelectorAll('em.scribe-marker');
+      var range = document.createRange();
+      range.collapse(false);
+      selection.removeAllRanges();
+
+      //if there is no selection
+      if(markers.length === 0){
+        return
+      }
+      //if we have a selection
+      else if(markers.length === 2){
+        //TODO -> selections
+      }
+      //if there is only the caret
+      else{
+        range.selectNode(markers[0]);
+        selection.addRange(range);
+      }
+
+      //increment the internal count
       this.count += 1;
     }
   }
 
   onContentChanged(){
-    console.log('-----------------------');
-    console.log(this);
-    console.log('-----------------------');
-    this._placeMarkers(()=>{
-      var newContent = virtualize(this.scribe.el);
-      var revertDiff = diff(newContent, this.lastContent);
-      this.diffs.push(revertDiff);
-      this.lastContent = newContent;
-    });
+    this._placeMarkers();
+    var newContent = virtualize(this.scribe.el);
+    var revertDiff = diff(newContent, this.lastContent);
+    this.diffs.push(revertDiff);
+    this.lastContent = newContent;
+    this.count = 1;
   }
 
   //thin private wrapper for placing and removing markers before/after an action
   _placeMarkers(fn){
     var s = new this.scribe.api.Selection();
-    s.placeMarkerds();
-    fn();
-    s.removeMarkers();
+    s.placeMarkers();
   }
 
 };
