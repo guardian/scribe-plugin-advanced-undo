@@ -30,7 +30,7 @@
     }
   });
 
-  require(['scribe','build/main.build'], function(Scribe, scribeAdvancedUndo){
+  require(['scribe','build/main'], function(Scribe, scribeAdvancedUndo){
     window.Scribe = Scribe;
     window.scribe = new Scribe(document.querySelector('.scribe'));
     scribe.use(scribeAdvancedUndo());
