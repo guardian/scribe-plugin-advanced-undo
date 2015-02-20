@@ -20,12 +20,12 @@ describe('Removing Characters', ()=>{
   given('We have some content', ()=>{
     givenContentOf('This is some |', ()=>{
       when('we press undo', function(){
-        it('should delete one character', function(){
+        it.only('should delete one character', function(){
           scribeNode.sendKeys(' content')
             .then(()=>scribeNode.sendKeys(webdriver.Key.chord(webdriver.Key.META, 'z')))
             .then(()=> scribeNode.getInnerHTML())
             .then((html)=>{
-              expect(html).to.include('conte</p>')
+              expect(html).to.include('conten</p>')
             });
         });
       });
