@@ -14,12 +14,12 @@ mocha.reporter('spec');
 
 mocha.addFile(path.resolve(__dirname, 'setup.js'));
 
-glob(__dirname + '**/*.spec.js', function (err, files){
+glob(__dirname + '/**/*.spec.js', function (err, files){
   if(err){process.exit(1);}
 
   files.forEach( function (filePath){
     mocha.addFile(filePath);
-  })
+  });
 
   createRunner(mocha);
 

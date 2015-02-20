@@ -3,24 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <title>scribe-plugin-accelerated-undo</title>
-<script src='http://localhost:8990'></script>
 </head>
 
 <body>
 <div class='scribe'></div>
-<script src='../bower_components/requirejs/require.js'></script>
+<script src='../../../bower_components/requirejs/require.js'></script>
 <script>
   require.config({
     baseUrl: '../../../',
     paths: {
-      'scribe': 'bower_components/scribe/scribe',
-      'scribe-plugin-toolbar': 'bower_components/scribe-plugin-toolbar/scribe-plugin-toolbar'
+      'scribe': 'bower_components/scribe/scribe'
     }
   });
 
-  require(['scribe','build/main.build'], function(Scribe, scribeAdvancedUndo){
+  require(['scribe'], function(Scribe){
     window.Scribe = Scribe;
-    window.scribe = new Scribe(document.querySelecotr('.scribe'));
+    window.scribe = new Scribe(document.querySelector('.scribe'));
   });
 
 </script>

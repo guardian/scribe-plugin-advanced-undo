@@ -1,0 +1,66 @@
+var diff = require('virtual-dom/diff');
+var patch = require('virtual-dom/patch');
+var virtualize = require('vdom-virtualize');
+var uuid = require('uuid');
+
+module.exports = class UndoController {
+
+  constructor(scribe, attrs){
+    //remove the default undo command as we will be replacing it
+    scribe.commands.undo.execute = function(){};
+    //keep a reference to this scribe instance as there can be multiple instances on the page
+    this.scribe = scribe;
+    //add an object to keep a list of our patches in reverse order
+    this.diffs = [];
+    //set the last content so we have a point of comparison
+    this.lastContent = virtualize(this.scribe.el);
+    //add listeners
+    this.scribe.el.addEventListener('input', (e)=> this.onContentChanged(e));
+    this.scribe.el.addEventListener('keydown', (e)=> this.onKeyPressed(e));
+  }
+
+  onKeyPressed(e){
+    if((e.ctrlKey ||  e.metaKey) && e.keyCode === 90){
+      e.preventDefault();
+      //write the previous content into scribe's element
+      var diff = this.diffs.pop();
+      patch(this.scribe.el, diff);
+
+      //place the caret
+      var selection = new scribe.api.Selection().selection;
+      var markers = this.scribe.el.querySelectorAll('em.scribe-marker');
+      var range = document.createRange();
+      range.collapse(false);
+      selection.removeAllRanges();
+
+      //if there is no selection
+      if(markers.length === 0){
+        return
+      }
+      //if we have a selection
+      else if(markers.length === 2){
+        //TODO -> selections
+      }
+      //if there is only the caret
+      else{
+        range.selectNode(markers[0]);
+        selection.addRange(range);
+      }
+    }
+  }
+
+  onContentChanged(){
+    this._placeMarkers();
+    var newContent = virtualize(this.scribe.el);
+    var revertDiff = diff(newContent, this.lastContent);
+    this.diffs.push(revertDiff);
+    this.lastContent = newContent;
+  }
+
+  //thin private wrapper for placing and removing markers before/after an action
+  _placeMarkers(fn){
+    var s = new this.scribe.api.Selection();
+    s.placeMarkers();
+  }
+
+};
