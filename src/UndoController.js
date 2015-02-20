@@ -58,7 +58,6 @@ UndoController.prototype = {
   },
 
   onContentChanged: _.throttle(function(){
-    console.log('writing content');
     this._placeMarkers();
     var newContent = virtualize(this.scribe.el);
     var revertDiff = diff(newContent, this.lastContent);
