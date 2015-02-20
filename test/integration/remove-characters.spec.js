@@ -25,7 +25,7 @@ describe('Removing Characters', ()=>{
             .then(()=>scribeNode.sendKeys(webdriver.Key.chord(webdriver.Key.META, 'z')))
             .then(()=> scribeNode.getInnerHTML())
             .then((html)=>{
-              expect(html).to.include('conte</p>')
+              expect(html).to.include('conten</p>')
             });
         });
       });
