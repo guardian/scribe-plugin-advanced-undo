@@ -12,8 +12,6 @@ module.exports = class UndoController {
     this.scribe = scribe;
     //add an object to keep a list of our patches in reverse order
     this.diffs = [];
-    //add a count to the number of undo commands
-    this.count = 0;
     //set the last content so we have a point of comparison
     this.lastContent = virtualize(this.scribe.el);
     //add listeners
@@ -48,9 +46,6 @@ module.exports = class UndoController {
         range.selectNode(markers[0]);
         selection.addRange(range);
       }
-
-      //increment the internal count
-      this.count += 1;
     }
   }
 
@@ -60,7 +55,6 @@ module.exports = class UndoController {
     var revertDiff = diff(newContent, this.lastContent);
     this.diffs.push(revertDiff);
     this.lastContent = newContent;
-    this.count = 1;
   }
 
   //thin private wrapper for placing and removing markers before/after an action
