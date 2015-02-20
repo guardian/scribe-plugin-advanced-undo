@@ -6,7 +6,7 @@ var virtualize = require('vdom-virtualize');
 var _ = require('lodash');
 
 
-function UndoController(){
+function UndoController(scribe, attrs){
   //remove the default undo command as we will be replacing it
   scribe.commands.undo.execute = function(){};
   //keep a reference to this scribe instance as there can be multiple instances on the page
