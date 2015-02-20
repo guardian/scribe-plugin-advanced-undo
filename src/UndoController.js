@@ -20,7 +20,7 @@ module.exports = class UndoController {
   }
 
   onKeyPressed(e){
-    if(e.metaKey && e.keyCode === 90){
+    if((e.ctrlKey ||  e.metaKey) && e.keyCode === 90){
       e.preventDefault();
       //write the previous content into scribe's element
       var diff = this.diffs.pop();
