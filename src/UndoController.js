@@ -29,7 +29,7 @@ module.exports = class UndoController {
       patch(this.scribe.el, diff);
 
       //place the caret
-      var selection = window.getSelection();
+      var selection = new scribe.api.Selection().selection;
       var markers = this.scribe.el.querySelectorAll('em.scribe-marker');
       var range = document.createRange();
       range.collapse(false);
