@@ -26,18 +26,17 @@ module.exports = class UndoController {
   }
 
   onKeyPressed(e){
-    console.log('GOT KEY PRESS');
     if((e.ctrlKey ||  e.metaKey) && e.keyCode === 90){
       e.preventDefault();
-      console.log('--- UNDO ---');
       //reverse loop
       for(let i = (this.history.length -1); i >= 0; i--){
 
         var data = this.history[i];
         var interval = this.timeStamp - data.time;
 
-        console.log('loop', interval, REVERT_INTERVAL);
-        if (interval >= REVERT_INTERVAL) {
+        //we want to revert if there is a diff created within the given interval
+        //we also want to revert to the original content state if we get to the end of the stack.
+        if (interval >= REVERT_INTERVAL || i <= 0) {
           this.revert(data.revertDiff);
           //clean the history list
           this.replayList.concat(this.history.splice(i, this.history.length - i));
@@ -45,15 +44,11 @@ module.exports = class UndoController {
           this.timeStamp = data.time;
           break;
         }
-
-        //it can be the case that some of the first few actions happen
-
       }
     }
   }
 
   revert(diff){
-    console.log('--- REVERt ---');
     //write the previous content into scribe's element
     patch(this.scribe.el, diff);
     this._placeCaret();
@@ -80,7 +75,6 @@ module.exports = class UndoController {
 
   //thin private wrapper for placing the caret;
   _placeCaret(){
-    console.log('place caret');
     //place the caret
     var selection = new this.scribe.api.Selection().selection;
     var markers = this.scribe.el.querySelectorAll('em.scribe-marker');
@@ -104,15 +98,12 @@ module.exports = class UndoController {
     }
   }
 
-  //thin private wrapper for placing and removing markers before/after an action
   _placeMarkers(){
-    console.log('place markers');
     var s = new this.scribe.api.Selection();
     s.placeMarkers();
   }
 
   _removeMarkers(){
-    console.log('remove markers');
     var s = new this.scribe.api.Selection();
     s.removeMarkers();
   }

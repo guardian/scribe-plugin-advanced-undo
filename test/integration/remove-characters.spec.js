@@ -20,7 +20,7 @@ describe('Removing Characters', ()=>{
   given('We have no content', ()=>{
     givenContentOf('|', ()=>{
       when('we press undo', function(){
-        it.only('should delete a section of content', function(){
+        it('should delete a section of content', function(){
 
           scribeNode.sendKeys('This is some')
             .then(()=> driver.sleep(500))
@@ -35,4 +35,25 @@ describe('Removing Characters', ()=>{
       });
     });
   });
+
+  given('We have no content', ()=>{
+    givenContentOf('|', ()=>{
+      when('we press undo multiple times', function(){
+        it('should delete all of the content', function(){
+
+          scribeNode.sendKeys('This is some')
+            .then(()=> driver.sleep(500))
+            .then(()=> scribeNode.sendKeys(' content'))
+            .then(()=> undo())
+            .then(()=> undo())
+            .then(()=> scribeNode.getInnerHTML())
+            .then((html)=> {
+              expect(html).to.include('<p><br></p>');
+           })
+
+        });
+      });
+    });
+  });
+
 });
