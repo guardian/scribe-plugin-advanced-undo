@@ -17,25 +17,22 @@ beforeEach(function() {
 
 describe('Removing Characters', ()=>{
 
-  given('We have some content', ()=>{
+  given('We have no content', ()=>{
     givenContentOf('|', ()=>{
       when('we press undo', function(){
-        it.only('should delete one character', function(){
+        it.only('should delete a section of content', function(){
 
           scribeNode.sendKeys('This is some')
             .then(()=> driver.sleep(500))
+            .then(()=> scribeNode.sendKeys(' content'))
+            .then(()=> undo())
             .then(()=> scribeNode.getInnerHTML())
             .then((html)=> {
-              console.log('-----------------------');
-              console.log(html);
-              console.log('-----------------------');
-            })
+              expect(html).to.include('som</p>');
+           })
 
         });
       });
     });
   });
-
-
-
 });
