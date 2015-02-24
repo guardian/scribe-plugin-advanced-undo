@@ -7,7 +7,7 @@ before(function(){
 
 module.exports = function loadPlugin() {
   return driver.executeAsyncScript(function (done) {
-    require(['../../../build/main'], function (plugin) {
+    require(['scribe', '../../../build/main'], function (Scribe, plugin) {
       window.scribe.use(plugin());
       done();
     });

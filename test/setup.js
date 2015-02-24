@@ -1,12 +1,11 @@
 var helpers = require('scribe-test-harness/helpers');
-var initializeScribe = helpers.initializeScribe.bind(null, 'scribe');
+var initializeScribe = helpers.initializeScribe.bind(null, 'scribe', { undo: { enabled: false} });
 var loadPlugin = require('./integration/helpers/load-plugin.js');
 
-before(function(){
-
+beforeEach(function(){
+  return initializeScribe();
 });
 
 beforeEach(function(){
-  loadPlugin();
-  return initializeScribe();
+  return loadPlugin();
 });
