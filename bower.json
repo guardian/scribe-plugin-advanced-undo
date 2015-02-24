@@ -8,7 +8,7 @@
   "main": "build/main.build.js",
   "dependencies": {},
   "devDependencies": {
-    "scribe": "~1.2.7",
+    "scribe": "~1.2.11",
     "scribe-plugin-toolbar": "~0.1.4",
     "requirejs": "~2.1.16"
   },
