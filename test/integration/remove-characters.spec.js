@@ -18,47 +18,24 @@ beforeEach(function() {
 describe('Removing Characters', ()=>{
 
   given('We have some content', ()=>{
-    givenContentOf('This is some |', ()=>{
+    givenContentOf('|', ()=>{
       when('we press undo', function(){
-        it('should delete one character', function(){
-          scribeNode.sendKeys(' content')
-          .then(()=> undo())
-          .then(()=> driver.executeScript(()=> {
-            new scribe.api.Selection().placeMarkers();
-          }))
-          .then(()=> scribeNode.getInnerHTML())
-          .then((html)=>{
-            //check we have deleted content and placed the caret in the correct place
-            expect(html).to.include('conten<em class="scribe-marker"></em></p>');
-          });
-        });
-      });
-    });
-  });
+        it.only('should delete one character', function(){
 
-
-  //We revert by a given time interval
-  //If the first few characters are placed before that interval they can never be removed
-  describe('Removing the first few characters', function(){
-    givenContentOf('', ()=>{
-      when('we add a small amount of content', function(){
-        it.only('should remove all content', function(){
-
-          scribeNode.sendKeys('test')
-          .then(()=> driver.sleep(500))
-          .then(()=> scribeNode.sendKeys(' content'))
-          .then(()=> undo())
-          .then(()=> undo())
-          .then(()=> driver.sleep(60000))
-          .then(()=> scribeNode.getInnerHTML())
-          .then((html)=>{
-            expect(html).to.equal('<p><br/></p>');
-          })
+          scribeNode.sendKeys('This is some')
+            .then(()=> driver.sleep(500))
+            .then(()=> scribeNode.getInnerHTML())
+            .then((html)=> {
+              console.log('-----------------------');
+              console.log(html);
+              console.log('-----------------------');
+            })
 
         });
       });
     });
   });
+
 
 
 });
