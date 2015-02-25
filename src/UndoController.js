@@ -28,23 +28,16 @@ module.exports = class UndoController {
   onKeyPressed(e){
     if((e.ctrlKey ||  e.metaKey) && e.keyCode === 90){
       e.preventDefault();
-      //reverse loop
-      for(let i = (this.history.length -1); i >= 0; i--){
 
-        var data = this.history[i];
-        var interval = this.timeStamp - data.time;
-
-        //we want to revert if there is a diff created within the given interval
-        //we also want to revert to the original content state if we get to the end of the stack.
-        if (interval >= REVERT_INTERVAL || i <= 0) {
-          this.revert(data.revertDiff);
-          //clean the history list
-          this.replayList.concat(this.history.splice(i, this.history.length - i));
-          //reset the interval
-          this.timeStamp = data.time;
-          break;
+      this.history.some((historyItem, index)=>{
+        var interval = this.timeStamp - historyItem.timeStamp;
+        if (interval >= REVERT_INTERVAL || index >= (this.history.length -1))  {
+          this.revert(historyItem.revertDiff);
+          this.replayList.concat(this.history.splice(0, index));
+          this.timeStamp = historyItem.timeStamp;
+          return true;
         }
-      }
+      });
     }
   }
 
@@ -61,8 +54,8 @@ module.exports = class UndoController {
     var revertDiff = diff(newContent, this.lastContent);
     var deltaDiff = diff(this.lastContent, newContent);
 
-    this.history.push({
-      time: new Date().getTime(),
+    this.history.unshift({
+      timeStamp: this._getTime(),
       revertDiff: revertDiff,
       deltaDiff: deltaDiff
     });
